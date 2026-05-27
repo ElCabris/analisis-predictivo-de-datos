@@ -1,0 +1,151 @@
+id_sentencia,año,tema_principal,tipo_accionante,sujeto_especial_proteccion,edad_aproximada,representacion,tipo_entidad,sector_entidad,derecho_salud,derecho_minimo_vital,debido_proceso,seguridad_social,existe_otro_medio_defensa,medio_es_idoneo,se_alega_perjuicio_irremediable,perjuicio_irremediable_probado,subsidiariedad_cumplida,legitimacion_activa,legitimacion_pasiva,urgencia,afecta_minimo_vital,afecta_salud,caso_involucra_servicio_publico,decision_corte,procedencia_tutela,dias_desde_hecho,hay_inmediatez
+t-003,2022,seguridad social,persona_natural,0,55,agente_oficioso,economia_mixta,salud,1,1,0,1,1,1,0,0,0,0,1,0,0,0,1,improcedente,0,7,1
+t-256,2019,seguridad social,persona_natural,1,69,directo,privada,otro,0,1,0,1,1,0,1,1,1,1,1,1,1,0,1,concede,1,74,1
+t-056,2013,seguridad social,persona_natural,0,,apoderado,pública,otro,0,1,0,1,1,0,0,0,1,1,1,0,0,0,0,niega,0,,0
+t-852,2012,seguridad social,persona_natural,1,65,apoderado,pública,otro,0,1,1,1,1,1,1,0,0,1,1,0,0,0,1,improcedente,0,,0
+t-608,2016,seguridad social,persona_natural,1,50,apoderado,pública,pensiones,1,1,0,1,1,0,1,1,0,1,1,1,1,1,1,concede,1,30,1
+t-756,2011,seguridad social,persona_natural,1,,directo,pública,otro,1,1,0,1,1,1,1,0,0,1,1,0,1,1,1,niega,0,245,1
+t-444,2020,seguridad social,persona_natural,1,71,apoderado,privada,educativo,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,concede,1,210,1
+t-279,2019,seguridad social,persona_natural,1,34,apoderado,privada,pensiones,0,1,1,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,210,1
+t-486,2025,seguridad social,persona_natural,0,66,apoderado,pública,pensiones,0,0,1,1,1,1,1,0,0,1,1,0,0,0,1,improcedente,0,150,1
+t-363,2024,seguridad social,persona_natural,1,47,apoderado,privada,pensiones,0,1,1,1,1,1,1,0,0,1,1,0,0,0,1,improcedente,0,373,1
+t-095,2025,seguridad social,persona_natural,1,44,directo,privada,pensiones,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,22,1
+t-195,2023,seguridad social,persona_natural,1,71,directo,economia_mixta,otro,0,1,1,1,1,1,1,0,0,1,1,0,1,0,1,improcedente,0,9490,0
+t-402,2022,seguridad social,persona_natural,1,52,apoderado,privada,otro,0,1,1,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,139,1
+t-774,2012,seguridad social,persona_natural,0,,apoderado,privada,otro,0,0,0,1,1,1,1,0,0,1,1,0,0,0,1,improcedente,0,106,1
+t-820,2009,seguridad social,persona_natural,1,56,directo,privada,pensiones,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,niega,1,163,1
+t-296,2016,seguridad social,persona_natural,1,80,directo,pública,otro,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,concede,1,30,1
+t-404,2009,seguridad social,persona_natural,1,62,apoderado,pública,pensiones,0,1,1,1,1,0,1,1,1,1,1,1,1,0,1,concede,1,301,1
+t-612,2010,seguridad social,persona_natural,1,,directo,privada,salud,0,1,0,1,1,0,1,1,1,1,1,1,1,0,1,niega,0,240,1
+t-933,2010,seguridad social,persona_natural,0,32,directo,pública,pensiones,0,0,0,1,1,1,0,0,0,1,1,0,0,0,1,niega,0,,
+t-376,2025,seguridad social,persona_natural,1,33,directo,pública,pensiones,0,1,0,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,,1
+t-022,2025,seguridad social,persona_natural,1,59,directo,privada,otro,0,0,1,1,1,1,0,0,0,1,1,0,0,0,1,improcedente,0,44,1
+t-095,2025,seguridad social,persona_natural,1,44,apoderado,privada,pensiones,0,1,0,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,30,1
+t-569,2023,seguridad social,persona_natural,1,67,directo,privada,pensiones,0,1,1,1,1,1,1,0,1,1,1,0,0,1,1,improcedente,0,9,1
+t-053,2018,seguridad social,persona_natural,1,71,apoderado,pública,pensiones,0,1,0,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,455,1
+t-036,2018,seguridad social,persona_natural,1,86,apoderado,pública,otro,0,1,0,1,1,0,1,1,1,1,1,1,1,1,1,niega,0,,1
+t-814,2013,seguridad social,persona_natural,1,,directo,pública,pensiones,0,1,0,1,1,1,1,1,1,1,1,1,1,0,1,concede,1,,1
+t-405,2011,seguridad social,persona_natural,1,71,apoderado,pública,pensiones,0,1,1,1,1,0,1,1,1,1,1,1,1,0,1,concede,1,64,1
+t-029,2017,seguridad social,persona_natural,1,62,directo,pública,pensiones,0,1,1,1,1,0,1,1,1,1,1,1,1,0,1,niega,1,32,1
+t-046 ,2024,seguridad social,persona_natural,1,,directo,economia_mixta,salud,0,0,1,1,1,0,1,1,1,1,1,1,1,0,1,concede,1,19,1
+t-280,2010,seguridad social,persona_natural,1,,directo,pública,otro,0,1,0,1,1,1,1,0,0,1,1,0,0,0,1,niega,0,747,0
+t-709,2016,seguridad social,persona_natural,1,36,directo,pública,otro,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,concede,1,101,1
+t-537,2004,seguridad social,persona_natural,1,42,directo,pública,otro,1,0,0,1,1,1,1,0,0,1,1,1,0,1,1,niega,0,399,1
+t-037,2011,seguridad social,persona_natural,1,75,directo,pública,pensiones,0,1,1,1,1,0,1,0,1,1,1,0,1,0,1,concede,1,90,1
+t-330,1994,seguridad social,persona_natural,1,,directo,pública,otro,1,0,0,0,1,1,1,0,0,1,1,0,1,1,1,niega,0,347,1
+t-158,2024,seguridad social,persona_natural,0,,directo,privada,salud,0,1,0,0,1,0,1,0,1,1,1,0,1,0,1,concede,1,120,1
+t-218,2023,seguridad social,persona_natural,1,71,directo,pública,judicial,1,1,0,0,1,1,1,0,0,1,1,0,1,0,1,improcedente,0,42,1
+t-319,2022,seguridad social,persona_natural,1,,directo,privada,otro,1,1,0,1,1,1,1,0,0,1,1,0,0,1,1,improcedente,0,43,1
+t-469,2022,seguridad social,persona_natural,1,86,directo,pública,pensiones,0,1,0,1,1,0,1,0,1,1,1,0,0,1,0,niega,0,,1
+t-1037,2007,seguridad social,persona_natural,0,,directo,pública,otro,0,0,0,1,1,1,1,0,0,1,1,0,0,1,1,improcedente,0,,0
+t-440,2024,seguridad social,persona_natural,0,33,directo,pública,otro,0,1,1,1,1,1,1,0,1,1,1,0,0,0,1,concede,1,27,1
+t-200A,2018,seguridad social,persona_natural,1,56,directo,pública,pensiones,0,0,1,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,120,1
+t-153,2016,seguridad social,persona_natural,1,44,apoderado,privada,otro,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,concede,1,132,1
+t-433,2015,seguridad social,persona_natural,1,74,apoderado,pública,otro,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,59,1
+t-481,2018,seguridad social,persona_natural,1,82,apoderado,pública,pensiones,0,0,0,1,1,0,1,1,1,1,1,1,1,1,1,niega,0,53,1
+t-009,2019,seguridad social,persona_natural,1,70,apoderado,privada,pensiones,0,1,0,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,,1
+t-556,1996,seguridad social,persona_natural,0,,directo,economia_mixta,otro,0,0,0,1,1,1,1,0,0,1,1,0,0,0,1,improcedente,0,,0
+t-251,2021,seguridad social,persona_natural,1,68,agente_oficioso,pública,pensiones,0,1,0,1,1,0,1,0,1,1,1,1,1,1,1,concede,1,14,1
+t-301,2021,seguridad social,persona_natural,1,50,directo,economia_mixta,salud,0,0,0,1,1,0,1,1,1,1,1,1,1,1,1,improcedente,0,133,1
+t-577,2012,seguridad social,persona_natural,1,54,directo,privada,otro,0,0,0,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,65,1
+t-323,2018,seguridad social,persona_natural,1,59,apoderado,pública,pensiones,0,1,0,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,,1
+t-093,2013,seguridad social,persona_natural,1,80,directo,pública,pensiones,0,1,0,1,1,0,1,1,1,1,1,1,1,0,1,niega,1,,1
+t-040,2019,seguridad social,persona_natural,1,46,apoderado,pública,pensiones,1,1,0,1,1,0,1,0,1,1,1,1,1,1,1,concede,1,166,1
+t-1129,2001,seguridad social,persona_natural,1,,agente_oficioso,privada,salud,0,0,0,1,1,1,1,0,0,1,0,0,1,1,1,niega,0,205,1
+t-884,2003,seguridad social,persona_natural,1,,directo,pública,administrativo,1,0,0,1,1,1,1,0,0,1,1,0,1,1,1,improcedente,0,,0
+t-009,2025,seguridad social,persona_natural,1,51,directo,privada,salud,1,1,0,1,0,0,1,1,1,1,1,1,1,1,1,concede,1,240,1
+t-941,2011,seguridad social,persona_natural,0,67,directo,pública,otro,0,0,0,1,1,1,1,0,0,1,1,0,0,0,1,improcedente,0,300,0
+t-455,2017,seguridad social,persona_natural,0,,directo,pública,otro,0,1,0,0,1,1,1,0,0,1,1,0,1,0,1,niega,1,2,1
+t-023,2026,seguridad social,persona_natural,1,17,apoderado,pública ,otro,0,1,0,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,210,1
+t-904,2005,seguridad social,persona_natural,1,,directo,privada,salud,1,0,0,1,0,0,1,0,1,1,1,1,1,1,1,improcedente,0,153,1
+t-516,2023,seguridad social,persona_natural,1,36,agente_oficioso,privada,pensiones,0,1,0,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,60,1
+t-144,2021,seguridad social,persona_natural,1,,directo,privada,pensiones,0,1,1,0,1,0,1,1,1,1,1,1,1,0,1,niega,0,180,1
+t-266,2023,seguridad social,persona_natural,1,61,directo,pública,pensiones,0,0,1,1,1,0,1,0,1,1,1,0,1,1,1,concede,1,,1
+t-293,2021,seguridad social,persona_natural,0,60,directo,privada,pensiones,0,1,0,1,1,0,1,0,1,1,1,0,0,0,1,concede,1,,1
+t-301,2021,seguridad social,persona_natural,1,50,directo,economia_mixta,salud,0,0,0,1,1,1,1,0,0,1,1,0,0,0,1,improcedente,0,,1
+t-960,2008,seguridad social,persona_natural,1,,agente_oficioso,privada,salud,1,0,0,1,1,1,1,0,0,1,1,0,1,0,1,niega,1,,0
+t-192,2019,seguridad social,persona_natural,0,40,agente_oficioso,privada,salud,0,0,0,1,1,0,1,0,1,1,1,1,1,1,1,concede,1,,1
+t-354,2018,seguridad social,persona_natural,1,50,directo,privada,pensiones,1,1,0,1,1,0,1,0,1,1,1,1,1,1,1,concede,1,,1
+t-451,1998,seguridad social,persona_natural,,,apoderado,privada,otro,1,0,0,1,1,1,1,0,0,1,1,0,1,1,1,niega,0,187,0
+t-148,2019,seguridad social,persona_natural,1,71,agente_oficioso,pública,pensiones,0,1,1,1,1,0,1,0,1,1,1,0,0,0,1,concede,1,90,1
+t-003,2020,seguridad social,persona_natural,0,,directo,privada,otro,0,0,0,1,1,0,1,0,1,1,1,0,0,0,1,concede,1,21,1
+t-510,2024,salud,persona_natural,1,,agente_oficioso,pública,salud,1,0,0,0,1,0,1,1,1,1,1,1,0,1,1,concede,1,14,1
+t-124,2019,salud,persona_natural,1,68,directo,privada,salud,1,0,0,0,1,1,1,0,1,1,1,0,0,1,1,improcedente,0,5,1
+t-155,2024,salud,persona_natural,1,57,directo,privada,salud,1,0,0,0,0,0,1,1,1,1,1,1,0,1,1,concede,1,274,1
+t-1237,2008,salud,persona_natural,1,26,directo,pública,salud,1,0,0,1,1,1,1,0,0,1,1,0,1,1,1,improcedente,0,2,0
+t-308,2025,salud,persona_natural,1,,apoderado,pública,administrativo,1,0,0,0,0,0,1,1,1,1,1,1,0,1,1,concede,1,120,1
+t-042,2013,salud,persona_natural,1,28,directo,privada,salud,1,0,0,1,0,0,1,1,1,1,1,1,1,0,1,niega,0,32,1
+t-425,2013,salud,persona_natural,1,5,representante_legal,privada,salud,1,0,0,0,1,0,1,1,1,1,1,1,0,1,1,concede,1,,1
+t-873,2007,salud,persona_natural,0,,directo,privada,salud,1,0,1,0,1,0,1,1,1,1,1,1,0,1,1,concede,1,,1
+t-688,2006,salud,persona_natural,1,76,directo,privada,salud,1,0,0,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,,1
+t-001,2021,salud,persona_natural,1,21,agente_oficioso,privada,salud,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,concede,1,107,1
+t-392,2023,salud,persona_natural,1,31,directo,pública,salud,1,0,0,0,1,0,1,1,1,1,1,1,0,1,1,concede,1,1,1
+t-906,2004,salud,persona_natural,1,,agente_oficioso,privada,salud,1,0,0,1,1,0,1,1,1,1,1,1,0,1,1,concede,1,,1
+t-186,2005,salud,persona_natural,1,,agente_oficioso,pública,salud,1,0,0,0,1,0,1,1,1,1,1,1,0,1,1,niega,0,,1
+t-573,2001,salud,persona_natural,1,,agente_oficioso,privada,pensiones,1,0,0,1,0,0,1,1,0,0,1,0,1,1,1,improcedente,0,254,1
+t-319,2023,salud,persona_natural,0,34,directo,,,1,1,0,0,1,1,1,0,0,1,1,0,0,0,1,improcedente,0,8,1
+t-867,2006,salud,persona_natural,1,26,directo,privada,salud,1,0,0,0,1,1,1,0,0,1,1,0,1,1,1,niega,0,273,1
+t-1057,2008,salud,persona_natural,1,66,directo,privada,salud,1,0,0,0,1,0,1,1,0,1,1,1,0,1,1,niega,0,231,1
+t-1057,2008,salud,persona_natural,1,33,directo,privada,salud,1,0,0,0,0,0,1,1,0,1,1,1,1,1,1,niega,0,349,1
+t-1274,2001,salud,persona_natural,1,,directo,pública,salud,1,0,0,1,0,0,1,0,0,1,1,0,1,1,1,niega,0,204,1
+t-421,2020,salud,persona_natural,1,26,directo,pública,salud,0,0,0,1,0,0,1,1,1,1,1,1,1,1,1,concede,1,118,1
+t-519,2017,salud,persona_natural,1,,directo,privada,salud,1,0,0,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,49,1
+t-519,2017,salud,persona_natural,0,53,directo,privada,salud,1,0,0,0,1,1,1,0,1,1,1,0,0,1,1,niega,0,375,1
+t-565,2023,salud,persona_natural,1,25,directo,pública,otro,1,0,0,0,1,1,1,0,0,1,1,0,1,1,1,improcedente,0,153,1
+t-558,2023,salud,persona_natural,1,8,agente_oficioso,privada,otro,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,concede,1,60,1
+t-185,2024,salud,persona_natural,1,81,directo,privada,salud,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,concede,1,,1
+t-453,2025,salud,persona_natural,1,24,agente_oficioso,privada,salud,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,concede,1,23,1
+t-453,2025,salud,persona_natural,1,4,agente_oficioso,privada,salud,1,0,0,1,1,0,1,1,1,1,1,1,0,1,1,concede,1,7,1
+t-935,2010,salud,persona_natural,0,33,directo,privada,salud,1,0,0,1,1,0,1,0,0,1,1,0,0,1,1,niega,0,295,1
+t-057,2012,salud,persona_natural,1,63,agente_oficioso,privada,salud,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,concede,1,408,1
+t-238,2025,salud,persona_natural,1,86,agente_oficioso,privada,salud,1,0,0,0,1,0,1,1,1,1,1,1,0,1,1,concede,1,6,1
+t-191,2024,salud,persona_natural,1,1,representante_legal,economia_mixta,salud,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,concede,1,10,1
+t-633,2010,salud,persona_natural,0,,directo,privada,salud,1,0,0,1,0,0,1,0,0,1,1,0,1,1,1,niega,0,319,1
+t-633,2010,salud,persona_natural,0,,apoderado,privada,salud,1,0,0,0,0,0,1,0,0,1,1,0,1,1,1,niega,0,331,1
+t-436,2002,salud,persona_natural,1,,directo,pública,salud,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,niega,0,,1
+t-409,1995,salud,persona_natural,0,30,directo,pública,otro,1,0,0,0,1,1,1,0,0,1,1,0,0,1,1,niega,0,395,1
+t-306,2006,salud,persona_natural,1,,directo,pública,salud,1,0,0,0,1,0,1,0,1,1,1,1,1,1,1,niega,0,,1
+t-462A,2006,salud,persona_natural,1,77,directo,privada,salud,1,0,0,0,1,1,1,0,1,1,1,1,1,1,1,niega,0,216,1
+t-242,2004,salud,persona_natural,0,40,directo,privada,salud,1,0,0,0,1,0,1,0,0,1,1,0,0,1,1,niega,0,254,1
+t-857,2009,salud,persona_natural,0,,directo,privada,salud,1,0,0,0,1,0,1,0,0,1,1,0,0,1,1,niega,0,94,1
+t-370,2023,salud,persona_natural,1,41,directo,,,1,0,0,0,1,0,1,1,1,1,1,1,0,1,1,concede,1,323,1
+t-285,2024,salud,persona_natural,1,61,directo,economia_mixta,salud,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,concede,1,266,1
+t-285,2024,salud,persona_natural,1,49,directo,economia_mixta,salud,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,concede,1,600,1
+t-285,2024,salud,persona_natural,1,71,agente_oficioso,privada,salud,1,0,0,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,322,1
+t-285,2024,salud,persona_natural,1,70,agente_oficioso,privada,salud,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,concede,1,210,1
+t-565,2023,salud,persona_natural,0,,directo,público,salud,1,0,0,0,1,1,1,0,0,1,1,0,0,1,1,improcedente,0,150,1
+t-268,2023,salud,persona_natural,1,75,directo,economia_mixta,salud,1,0,0,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,21,1
+t-456,2025,salud,persona_natural,1,56,agente_oficioso,privada,salud,1,0,0,0,1,0,1,0,1,1,1,1,1,1,1,niega,0,120,1
+t-456,2025,salud,persona_natural,1,65,directo,privada,salud,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,niega,0,253,1
+t-017,2023,salud,persona_natural,1,24,agente_oficioso,economia_mixta,salud,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,concede,1,,1
+t-017,2023,salud,persona_natural,1,14,representante_legal,privada,salud,1,0,0,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,,1
+t-038,2022,salud,persona_natural,1,14,representante_legal,privada,salud,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,niega,0,28,1
+t-234,2007,salud,persona_natural,1,,agente_oficioso,privada,salud,1,0,0,0,1,0,1,0,1,1,1,0,0,1,1,niega,0,,1
+t-096,2011,salud,persona_natural,1,,representante_legal,privada,salud,1,0,0,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,120,1
+t-351,2024,salud,persona_natural,1,3,representante_legal,privada,salud,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,concede,1,60,1
+t-351,2024,salud,persona_natural,1,76,agente_oficioso,privada,salud,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,concede,1,,1
+t-351,2024,salud,persona_natural,1,61,directo,privada,salud,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,concede,1,90,1
+t-351,2024,salud,persona_natural,1,66,agente_oficioso,economia_mixta,salud,1,0,0,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,240,1
+t-935,2010,salud,persona_natural,0,33,directo,privada,salud,1,0,0,1,1,0,1,0,0,1,1,0,0,1,1,niega,0,,1
+t-941,2007,salud,persona_natural,1,65,directo,pública,otro,1,0,0,0,0,0,1,0,1,1,1,0,1,1,1,niega,0,,0
+t-1175,2008,salud,persona_natural,1,,directo,privada,salud,1,0,0,0,1,0,1,0,1,1,1,0,0,1,1,niega,0,240,1
+t-063,2011,salud,persona_natural,1,65,directo,privada,salud,1,0,1,0,1,0,1,0,1,1,1,0,0,1,1,niega,0,,1
+t-202,2007,salud,persona_natural,1,72,directo,privada,salud,1,0,0,1,1,1,1,0,0,1,1,0,0,1,1,niega,0,,0
+t-1238,2005,salud,persona_natural,1,26,agente_oficioso,privada,salud,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,concede,1,,1
+t-337,2003,salud,persona_natural,1,,agente_oficioso,privada,salud,1,0,0,1,1,1,1,0,1,1,1,0,0,1,1,niega,0,130,1
+t-377,2024,salud,persona_natural,1,70,directo,,salud,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,concede,1,,1
+t-377,2024,salud,persona_natural,1,70,agente_oficioso,,salud,1,0,0,1,1,0,1,1,1,1,1,0,1,1,1,concede,1,,1
+t-377,2024,salud,persona_natural,1,75,directo,,salud,1,0,0,1,1,0,1,1,1,1,1,0,1,1,1,concede,1,,1
+t-004,2006,salud,persona_natural,1,67,agente_oficioso,privada,salud,1,0,0,0,1,0,1,0,1,1,1,0,1,1,1,niega,0,,1
+t-578,2003,salud,persona_natural,1,28,directo,privada,salud,1,0,0,1,1,0,1,0,1,1,1,0,0,1,1,niega,0,,1
+t-207,2007,salud,persona_natural,1,6,representación_legal,privada,salud,1,0,0,1,1,0,1,0,1,1,1,0,0,0,1,niega,0,,1
+t-549,2023,salud,persona_natural,1,54,directo,economia_mixta,salud,1,0,0,0,1,0,1,1,1,1,1,0,1,1,1,concede,1,,1
+t-461,2025,salud,persona_natural,1,73,directo,,salud,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,concede,1,,1
+t-333,2004,salud,persona_natural,0,,directo,privada,salud,1,0,0,1,0,0,1,0,1,1,1,0,0,1,1,niega,0,,1
+t-322,1994,salud,persona_natural,1,,directo,,salud,1,0,0,0,1,0,1,0,1,1,1,1,0,1,1,niega,0,,1
+t-453,2003,salud,persona_natural,1,,apoderado,pública,otro,1,0,0,0,1,0,1,0,0,1,1,0,0,1,1,niega,0,,0
+t-309,2021,salud,persona_natural,1,1,representación_legal,economia_mixta,salud,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,concede,1,,1
+t-407,2024,salud,persona_natural,1,6,representación_legal,economia_mixta,salud,1,0,0,1,1,0,1,1,1,1,1,1,1,1,1,concede,1,6,1
+t-407,2024,salud,persona_natural,1,52,directo,privada,salud,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,concede,1,,1
+t-644,2001,salud,persona_natural,1,,directo,pública,otro,1,0,0,1,1,1,1,0,0,1,1,0,0,1,1,niega,0,,1
+t-910,2005,salud,persona_natural,1,4,representación_legal,privada,salud,1,0,0,0,1,0,1,0,1,1,1,1,0,1,1,niega,0,,1

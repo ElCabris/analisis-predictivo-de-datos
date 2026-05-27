@@ -1,0 +1,1490 @@
+% ============================================================
+% GUÍA MAESTRA DE ESTUDIO — ÁRBOLES DE DECISIÓN Y ENSAMBLE
+% Emanuel Cabrera Novoa · Análisis Predictivo de Datos · 2026
+% Compilar con: pdflatex (2 pasadas) o lualatex
+% ============================================================
+\documentclass[11pt, a4paper]{book}
+
+% ── Paquetes ─────────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=2.2cm, top=2.5cm, bottom=2.5cm]{geometry}
+
+% Colores y cajas
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+
+% Matemáticas
+\usepackage{amsmath, amssymb, mathtools}
+
+% Código fuente
+\usepackage{listings}
+\usepackage{inconsolata}
+
+% Tablas
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+
+% Gráficos y diagramas
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, calc,
+                decorations.pathreplacing, backgrounds}
+
+% Otros
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{fontawesome5}
+
+% ── Paleta de colores ─────────────────────────────────────────
+\definecolor{primary}{HTML}{1A237E}      % azul oscuro
+\definecolor{secondary}{HTML}{283593}
+\definecolor{accent}{HTML}{E53935}       % rojo
+\definecolor{treegreen}{HTML}{2E7D32}
+\definecolor{baggingblue}{HTML}{1565C0}
+\definecolor{boostingorange}{HTML}{E65100}
+\definecolor{xgbpurple}{HTML}{6A1B9A}
+\definecolor{lightbg}{HTML}{F5F5F5}
+\definecolor{warningbg}{HTML}{FFF8E1}
+\definecolor{successbg}{HTML}{E8F5E9}
+\definecolor{infobg}{HTML}{E3F2FD}
+\definecolor{critbg}{HTML}{FFEBEE}
+\definecolor{codebg}{HTML}{263238}
+\definecolor{codetext}{HTML}{ECEFF1}
+
+% ── Estilo de página ─────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\small\thepage}
+\fancyhead[LO]{\small\leftmark}
+\fancyhead[RE]{\small Árboles de Decisión y Métodos de Ensamble}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Estilo de títulos ─────────────────────────────────────────
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{primary}}
+  {\chaptertitlename\ \thechapter}{10pt}{\Huge}
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{secondary}}
+  {\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{secondary!80!black}}
+  {\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\color{secondary!60!black}}
+  {\thesubsubsection}{1em}{}
+
+% ── Cajas de colores ─────────────────────────────────────────
+\tcbset{
+  base/.style={
+    breakable, enhanced,
+    fonttitle=\bfseries\small,
+    coltitle=white,
+    attach boxed title to top left={yshift=-2mm, xshift=5mm},
+    boxed title style={rounded corners, size=small},
+    top=4mm
+  }
+}
+
+\newtcolorbox{critico}[1][]{base,
+  colback=critbg, colframe=accent, title={\faExclamationTriangle\ CONCEPTO CRÍTICO #1}}
+
+\newtcolorbox{cuando}[1][]{base,
+  colback=infobg, colframe=baggingblue, title={\faQuestion\ ¿CUÁNDO USAR? #1}}
+
+\newtcolorbox{tip}[1][]{base,
+  colback=successbg, colframe=treegreen, title={\faLightbulb\ TIP DE ESTUDIO #1}}
+
+\newtcolorbox{alerta}[1][]{base,
+  colback=warningbg, colframe=boostingorange, title={\faExclamationTriangle\ ADVERTENCIA #1}}
+
+\newtcolorbox{formula}[1][]{base,
+  colback=lightbg, colframe=primary, title={\faSuperscript\ FÓRMULA #1}}
+
+\newtcolorbox{ejercicio}[1][]{base,
+  colback=successbg!50, colframe=treegreen!60!black, title={\faPen\ EJERCICIO #1}}
+
+\newtcolorbox{resumen}[1][]{base,
+  colback=primary!8, colframe=primary!60, title={\faBookOpen\ RESUMEN #1}}
+
+% ── Estilo de código ─────────────────────────────────────────
+\lstdefinestyle{python}{
+  language=Python,
+  basicstyle=\ttfamily\footnotesize\color{codetext},
+  backgroundcolor=\color{codebg},
+  keywordstyle=\color{cyan}\bfseries,
+  stringstyle=\color{yellow!70!orange},
+  commentstyle=\color{green!60!white}\itshape,
+  numberstyle=\tiny\color{gray},
+  numbers=left,
+  numbersep=8pt,
+  breaklines=true,
+  showstringspaces=false,
+  frame=single,
+  framesep=4pt,
+  rulecolor=\color{codebg!50!black},
+  tabsize=4,
+  morekeywords={import, from, as, True, False, None, print, fit, predict,
+                transform, fit_transform, score, shape},
+}
+\lstset{style=python}
+
+% ── Hyperref ─────────────────────────────────────────────────
+\hypersetup{
+  colorlinks=true,
+  linkcolor=primary,
+  urlcolor=baggingblue,
+  citecolor=treegreen,
+  pdftitle={Guía Maestra - Árboles de Decisión y Ensamble},
+  pdfauthor={Emanuel Cabrera Novoa},
+}
+
+% ────────────────────────────────────────────────────────────
+\begin{document}
+
+% ── PORTADA ──────────────────────────────────────────────────
+\begin{titlepage}
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[primary] (current page.north west) rectangle
+        ([yshift=-8cm]current page.north east);
+    \fill[accent]  ([yshift=-8cm]current page.north west) rectangle
+        ([yshift=-8.6cm]current page.north east);
+  \end{tikzpicture}
+
+  \vspace*{1.5cm}
+  {\color{white}\fontsize{36}{44}\selectfont\bfseries
+    Árboles de Decisión\\[4pt]
+    y Métodos de Ensamble}\\[6pt]
+  {\color{white!80!gray}\Large Guía Maestra de Estudio — Handbook Técnico Profesional}
+
+  \vspace{3cm}
+  \begin{tikzpicture}
+    \node[fill=lightbg, rounded corners=8pt, inner sep=14pt, text width=13cm]{
+      \begin{tabular}{ll}
+        \textbf{Curso} & Análisis Predictivo de Datos · Machine Learning · Período 6\\[4pt]
+        \textbf{Estudiante} & Emanuel Cabrera Novoa\\[4pt]
+        \textbf{Docente} & Jhon Quiza\\[4pt]
+        \textbf{Año} & 2026\\[4pt]
+        \textbf{Versión} & 2.0 — Edición ampliada con guías de ejercicios
+      \end{tabular}
+    };
+  \end{tikzpicture}
+
+  \vfill
+  \textit{Nota: compilar con \texttt{pdflatex} (dos pasadas) o \texttt{lualatex}.}
+\end{titlepage}
+
+% ── TABLA DE CONTENIDOS ──────────────────────────────────────
+\tableofcontents
+\newpage
+
+% ════════════════════════════════════════════════════════════
+\chapter{Flujo de Decisión — ¿Qué Modelo Usar?}
+% ════════════════════════════════════════════════════════════
+
+Esta sección es el mapa de navegación del curso. Antes de escribir una sola línea de código,
+recorre este flujo para elegir el algoritmo adecuado.
+
+\section{Diagrama de Flujo General}
+
+\begin{center}
+\begin{tikzpicture}[
+  node distance=1.4cm and 2.2cm,
+  decision/.style={diamond, draw=primary, fill=infobg, thick,
+                   text width=3.2cm, align=center, inner sep=2pt, font=\footnotesize},
+  process/.style={rectangle, rounded corners=6pt, draw=treegreen, fill=successbg,
+                  thick, text width=3.8cm, align=center, font=\footnotesize\bfseries,
+                  inner sep=6pt},
+  terminal/.style={rectangle, rounded corners=12pt, draw=accent, fill=critbg,
+                   thick, text width=4cm, align=center, font=\small\bfseries,
+                   inner sep=7pt},
+  arrow/.style={-Stealth, thick, color=secondary},
+  label/.style={font=\scriptsize\bfseries, color=secondary}
+]
+
+% Nodo inicio
+\node[terminal] (start) {TENGO UN PROBLEMA\\DE MACHINE LEARNING};
+
+% Pregunta 1: ¿Interpretabilidad?
+\node[decision, below=of start] (q1) {¿Necesito\\interpretabilidad\\total?};
+
+% Árbol podado
+\node[process, right=2.5cm of q1] (tree) {\faTree\ Árbol de Decisión\\Podado\\max\_depth=3--5};
+
+% Pregunta 2: ¿Tamaño?
+\node[decision, below=of q1] (q2) {¿Datos muy\\grandes?\\($>$500k filas)};
+
+% LightGBM
+\node[process, right=2.5cm of q2] (lgbm) {\faRocket\ LightGBM\\(histogramas+GOSS)};
+
+% Pregunta 3: ¿Muchas categóricas?
+\node[decision, below=of q2] (q3) {¿Muchas variables\\categóricas de alta\\cardinalidad?};
+
+% CatBoost
+\node[process, right=2.5cm of q3] (cat) {\faCat\ CatBoost\\(Ordered TS)};
+
+% Pregunta 4: ¿Prototipo rápido?
+\node[decision, below=of q3] (q4) {¿Prototipo rápido\\/ baseline?};
+
+% Random Forest
+\node[process, right=2.5cm of q4] (rf) {\faTree\ Random Forest\\(robusto, poco tuning)};
+
+% Pregunta 5: ¿Máxima precisión?
+\node[decision, below=of q4] (q5) {¿Datos ruidosos\\u outliers?};
+
+% GB lr bajo
+\node[process, right=2.5cm of q5] (gb) {\faChartLine\ Gradient Boosting\\lr bajo (0.01--0.05)};
+
+% XGBoost (default para máx. precisión)
+\node[process, below=of q5] (xgb) {\faBolt\ XGBoost\\(máxima precisión)};
+
+% Flechas
+\draw[arrow] (start) -- (q1);
+\draw[arrow] (q1) -- node[label, above]{Sí} (tree);
+\draw[arrow] (q1) -- node[label, right]{No} (q2);
+\draw[arrow] (q2) -- node[label, above]{Sí} (lgbm);
+\draw[arrow] (q2) -- node[label, right]{No} (q3);
+\draw[arrow] (q3) -- node[label, above]{Sí} (cat);
+\draw[arrow] (q3) -- node[label, right]{No} (q4);
+\draw[arrow] (q4) -- node[label, above]{Sí} (rf);
+\draw[arrow] (q4) -- node[label, right]{No} (q5);
+\draw[arrow] (q5) -- node[label, above]{Sí} (gb);
+\draw[arrow] (q5) -- node[label, right]{No} (xgb);
+\end{tikzpicture}
+\end{center}
+
+\section{Flujo de Regularización de un Árbol}
+
+\begin{center}
+\begin{tikzpicture}[
+  node distance=1.2cm,
+  flowstep/.style={rectangle, rounded corners=5pt, draw=secondary, fill=infobg,
+               thick, text width=10cm, align=left, inner sep=8pt, font=\footnotesize},
+  check/.style={diamond, draw=accent, fill=critbg, thick,
+                text width=3cm, align=center, font=\footnotesize},
+  arrow/.style={-Stealth, thick, color=secondary}
+]
+\node[flowstep] (s1) {\textbf{PASO 1.} Entrenar árbol sin restricciones (\texttt{DecisionTreeClassifier()})\\
+  Medir: Train acc y Test acc};
+\node[check, below=0.7cm of s1] (c1) {Train $\approx$ 100\%\\Test $\ll$ Train?};
+\node[flowstep, below=0.7cm of c1] (s2) {\textbf{PASO 2.} Aplicar pre-poda: probar \texttt{max\_depth} $\in \{3,4,5\}$, \texttt{min\_samples\_leaf} $\in \{3,5,7\}$\\
+  Usar \texttt{GridSearchCV} con \texttt{scoring='f1\_weighted'}};
+\node[flowstep, below=0.7cm of s2] (s3) {\textbf{PASO 3.} Aplicar post-poda: buscar \texttt{ccp\_alpha} en \texttt{np.logspace(-3, 3)}\\
+  Comparar con pre-poda. Elegir el que generalice mejor.};
+\node[flowstep, below=0.7cm of s3] (s4) {\textbf{PASO 4.} Verificar: Train acc $\approx$ Test acc (diferencia $<$ 5\%)\\
+  Si sigue sobreajustando: reducir más la profundidad o aumentar \texttt{ccp\_alpha}};
+
+\draw[arrow] (s1) -- (c1);
+\draw[arrow] (c1) -- node[right, font=\scriptsize\bfseries, color=accent]{Sí = overfitting} (s2);
+\draw[arrow] (s2) -- (s3);
+\draw[arrow] (s3) -- (s4);
+\end{tikzpicture}
+\end{center}
+
+\section{Flujo de Tuning para Boosting}
+
+\begin{enumerate}[leftmargin=*, label=\textbf{Paso \arabic*.}]
+  \item \textbf{Baseline rápido:} entrenar con parámetros por defecto. Obtener F1/accuracy base.
+  \item \textbf{Número óptimo de árboles:} usar \textit{early stopping} con \texttt{learning\_rate=0.1}.
+        Observar a qué iteración se estabiliza el error de validación.
+  \item \textbf{Estructura del árbol:} variar \texttt{max\_depth} (3--8) y \texttt{min\_child\_weight}
+        o \texttt{min\_samples\_leaf}. Más profundidad = menos sesgo, más varianza.
+  \item \textbf{Regularización:} submustreo (\texttt{subsample=0.6--0.8}),
+        columnas (\texttt{colsample\_bytree=0.6--0.8}),
+        L1/L2 (\texttt{reg\_alpha}, \texttt{reg\_lambda}).
+  \item \textbf{Ajuste fino del learning rate:} reducir a 0.05 o 0.01 y aumentar \texttt{n\_estimators}
+        proporcionalmente. Re-validar con early stopping.
+  \item \textbf{Desbalance de clases:} si recall de clase minoritaria es muy bajo, ajustar
+        \texttt{scale\_pos\_weight} (XGBoost) o el umbral de decisión.
+\end{enumerate}
+
+\begin{cuando}[— Cuándo aplicar cada flujo]
+  \begin{tabular}{lp{9cm}}
+    \toprule
+    \textbf{Situación} & \textbf{Flujo a seguir}\\
+    \midrule
+    Primera vez con el dataset & Flujo general (sección 1.1) para elegir familia\\
+    Árbol único sobreajusta & Flujo de regularización (sección 1.2)\\
+    Quiero la máxima precisión & Flujo de tuning boosting (sección 1.3)\\
+    Presupuesto de tiempo limitado & Random Forest con \texttt{RandomizedSearchCV}, 30 iteraciones\\
+    Competencia Kaggle & Stacking: RF + XGBoost + LightGBM + CatBoost\\
+    \bottomrule
+  \end{tabular}
+\end{cuando}
+
+% ════════════════════════════════════════════════════════════
+\chapter{Árboles de Decisión — Teoría y Práctica}
+% ════════════════════════════════════════════════════════════
+
+\section{¿Qué es un Árbol de Decisión?}
+
+Un árbol de decisión es una estructura jerárquica que divide el espacio de características mediante
+reglas del tipo \textit{si–entonces}. Imita el razonamiento humano: una cadena de preguntas binarias
+conduce a una decisión final.
+
+\begin{resumen}[— Elementos del árbol]
+  \begin{tabular}{lll}
+    \toprule
+    \textbf{Elemento} & \textbf{Descripción} & \textbf{Analogía}\\
+    \midrule
+    Nodo raíz (Root) & Primera pregunta, característica más importante &
+      La pregunta más discriminativa\\
+    Nodos interiores & Preguntas intermedias & Condiciones anidadas\\
+    Ramas (Branches) & Posibles valores del atributo & Respuestas posibles\\
+    Hojas (Leaf nodes) & Predicciones finales & Resultado: clase o valor\\
+    \bottomrule
+  \end{tabular}
+\end{resumen}
+
+\subsection{El Algoritmo CART}
+
+CART (Classification and Regression Trees) construye árboles de forma \textit{greedy} y
+\textit{top-down}: en cada nodo busca exhaustivamente el atributo y el punto de corte que
+mejor divida los datos.
+
+\begin{lstlisting}[caption={Pseudocódigo CART}]
+def CART(nodo, datos, profundidad):
+    if criterio_parada(datos, profundidad):
+        return hoja(clase_mayoritaria(datos))
+    
+    mejor_ganancia = -inf
+    for atributo a in caracteristicas:
+        for valor de corte v in a:
+            izq = datos[a <= v]
+            der = datos[a > v]
+            ganancia = impureza(datos) - impureza_ponderada(izq, der)
+            if ganancia > mejor_ganancia:
+                mejor = (a, v, ganancia)
+    
+    nodo.izq = CART(nodo_izq, izq, profundidad+1)
+    nodo.der = CART(nodo_der, der, profundidad+1)
+    return nodo
+\end{lstlisting}
+
+\begin{tip}[— Criterios de parada]
+  El árbol deja de crecer cuando: (1) el nodo es puro (todos de la misma clase),
+  (2) se alcanzó \texttt{max\_depth}, (3) el nodo tiene menos muestras que
+  \texttt{min\_samples\_split}, o (4) la ganancia de información es cero.
+\end{tip}
+
+\section{Criterios de Impureza}
+
+\subsection{Entropía}
+
+Proviene de la teoría de la información de Shannon (1948). Mide la incertidumbre de un conjunto.
+
+\begin{formula}[— Entropía de Shannon]
+  \[
+    H(S) = -\sum_{c \in \mathcal{C}} p(c) \cdot \log_2 p(c)
+  \]
+  \begin{itemize}
+    \item $S$ = conjunto de datos, $\mathcal{C}$ = conjunto de clases, $p(c)$ = proporción de clase $c$
+    \item $H(S) = 0$ $\Rightarrow$ nodo completamente puro (certeza máxima)
+    \item $H(S) = 1$ $\Rightarrow$ máxima impureza para 2 clases (50/50)
+    \item Rango: $\bigl[0,\; \log_2|\mathcal{C}|\bigr]$
+  \end{itemize}
+\end{formula}
+
+\subsubsection{Ejemplo numérico — Dataset de Tenis}
+
+Datos: 4 días se jugó tenis (Yes), 3 no se jugó (No).
+\[
+  p(\text{Yes}) = \tfrac{4}{7} \approx 0.571,\quad p(\text{No}) = \tfrac{3}{7} \approx 0.429
+\]
+\[
+  H(S) = -(0.571 \cdot \log_2 0.571) - (0.429 \cdot \log_2 0.429)
+       = 0.461 + 0.524 = \mathbf{0.985}
+\]
+\textit{Interpretación:} casi máxima impureza; los datos están muy mezclados.
+
+\subsection{Ganancia de Información}
+
+\begin{formula}[— Ganancia de Información]
+  \[
+    GI(S, a) = H(S) - \sum_{v \in \text{values}(a)} \frac{|S_v|}{|S|} \cdot H(S_v)
+  \]
+  El árbol selecciona el atributo con \textbf{mayor} ganancia (equivale al de \textbf{menor}
+  entropía ponderada tras la división).
+\end{formula}
+
+\subsection{Índice de Gini}
+
+Probabilidad de clasificar incorrectamente una muestra aleatoria etiquetada según la distribución
+del nodo. Más eficiente computacionalmente que la entropía (sin logaritmos).
+
+\begin{formula}[— Impureza de Gini]
+  \[
+    \text{Gini}(S) = 1 - \sum_i p_i^2
+  \]
+  \[
+    \text{Gini\_split} = \frac{|L|}{|L|+|R|}\cdot\text{Gini}(L)
+                       + \frac{|R|}{|L|+|R|}\cdot\text{Gini}(R)
+  \]
+\end{formula}
+
+\subsubsection{Ejemplo: nodo con 4 elementos (3A, 1B)}
+\[
+  p_A = 0.75,\quad p_B = 0.25
+\]
+\[
+  \text{Gini} = 1 - (0.75^2 + 0.25^2) = 1 - (0.5625 + 0.0625) = \mathbf{0.375}
+\]
+\textit{Interpretación:} 37.5\% de probabilidad de clasificar incorrectamente.
+
+\begin{resumen}[— Entropía vs. Gini]
+  \begin{tabular}{lll}
+    \toprule
+    \textbf{Criterio} & \textbf{Entropía} & \textbf{Gini}\\
+    \midrule
+    Cálculo & Requiere logaritmos (lento) & Solo potencias (rápido)\\
+    Sensibilidad & Favorece nodos muy puros & Favorece divisiones equilibradas\\
+    Resultado práctico & Casi idéntico & Idéntico en práctica\\
+    Default sklearn & No & \textbf{Sí}\\
+    \bottomrule
+  \end{tabular}
+\end{resumen}
+
+\begin{cuando}[— Entropía vs. Gini]
+  Usa \textbf{entropía} cuando quieras el árbol más informativo posible (diferencias muy pequeñas).
+  Usa \textbf{Gini} cuando priorices la velocidad computacional (datasets grandes).
+  En la práctica: no importa cuál elijas, el resultado será prácticamente idéntico.
+\end{cuando}
+
+\subsection{Criterios para Regresión}
+
+\begin{center}
+  \begin{tabular}{llp{5cm}}
+    \toprule
+    \textbf{Criterio} & \textbf{Fórmula} & \textbf{Cuándo usarlo}\\
+    \midrule
+    MSE (default) & $\frac{1}{n}\sum(y_i - \hat{y})^2$ & Errores grandes deben penalizarse más\\
+    MAE & $\frac{1}{n}\sum|y_i - \hat{y}|$ & Hay outliers que no deben dominar\\
+    Friedman MSE & MSE con corrección & Boosting (evalúa potencial de mejora)\\
+    Poisson & $-\sum y_i \log\hat{y}_i + \hat{y}_i$ & Variables de conteo (eventos/tiempo)\\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+\section{Ventajas y Desventajas}
+
+\begin{minipage}[t]{0.48\textwidth}
+  \begin{tcolorbox}[colback=successbg, colframe=treegreen, title={\faCheck\ Ventajas}]
+    \begin{itemize}[noitemsep]
+      \item Fácil interpretación (caja blanca)
+      \item Captura relaciones no lineales
+      \item No requiere escalado de variables
+      \item No requiere manejo de nulos
+      \item Selección implícita de características
+      \item Importancia de características disponible
+    \end{itemize}
+  \end{tcolorbox}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+  \begin{tcolorbox}[colback=critbg, colframe=accent, title={\faTimes\ Desventajas}]
+    \begin{itemize}[noitemsep]
+      \item Tendencia al sobreajuste sin regularización
+      \item Alta varianza (sensible a datos)
+      \item Predicciones discontinuas en regresión
+      \item No los más precisos en solitario
+      \item Algoritmo greedy $\Rightarrow$ no óptimo global
+    \end{itemize}
+  \end{tcolorbox}
+\end{minipage}
+
+\section{Regularización y Podado}
+
+\begin{critico}
+  Un árbol \textbf{sin regularización siempre sobreajusta}. Es la primera cosa que debes verificar.
+  Train accuracy = 100\% + Test accuracy = 77\% = \textbf{señal de alarma}.
+\end{critico}
+
+\subsection{Pre-poda (durante la construcción)}
+
+\begin{lstlisting}[caption={Pre-poda con GridSearchCV}]
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import GridSearchCV
+import numpy as np
+
+grid = {
+    'max_depth':         [2, 3, 4, 5],       # Profundidad maxima
+    'min_samples_leaf':  [3, 5, 7],           # Min muestras por hoja
+    'min_samples_split': [2, 5, 10],          # Min muestras para dividir
+}
+gs = GridSearchCV(
+    DecisionTreeClassifier(random_state=1),
+    param_grid=grid,
+    scoring='f1_weighted',
+    cv=5
+)
+gs.fit(X_train, y_train)
+print(f"Mejor: {gs.best_params_}")
+\end{lstlisting}
+
+\subsection{Post-poda: \texttt{ccp\_alpha}}
+
+\begin{formula}[— Cost-Complexity Pruning]
+  El parámetro \texttt{ccp\_alpha} ($\alpha$) penaliza la complejidad del árbol.
+  A mayor $\alpha$, más ramas se podan. El algoritmo elimina primero los
+  ``enlaces más débiles'' (ramas que menos aportan).
+\end{formula}
+
+\begin{lstlisting}[caption={Post-poda con ccp\_alpha}]
+grid = {'ccp_alpha': np.logspace(-3, 3)}  # [0.001 ... 1000]
+gs = GridSearchCV(
+    DecisionTreeClassifier(random_state=1),
+    param_grid=grid,
+    scoring='recall'
+)
+gs.fit(X_train, y_train)
+print(f"Mejor alpha: {gs.best_params_}")
+# Resultado tipico: ccp_alpha=0.00543, recall=0.55
+\end{lstlisting}
+
+\begin{resumen}[— Pre-poda vs Post-poda]
+  \begin{tabular}{lll}
+    \toprule
+    & \textbf{Pre-poda} & \textbf{Post-poda (ccp\_alpha)}\\
+    \midrule
+    Cuándo & Durante construcción & Tras construir árbol completo\\
+    Velocidad & Más rápida & Más lenta\\
+    Calidad & Puede ser subóptima & Generalmente más sistemática\\
+    Uso recomendado & Datasets grandes & Cuando importa interpretabilidad\\
+    \bottomrule
+  \end{tabular}
+\end{resumen}
+
+\section{Invarianza al Escalado}
+
+\begin{critico}
+  Los árboles \textbf{NO se benefician del escalado de variables}.
+  Sus decisiones se basan en umbrales; si escalas, el umbral se ajusta proporcionalmente
+  y el resultado es \textbf{idéntico}. Aplicar \texttt{StandardScaler} a un árbol no daña,
+  pero es tiempo perdido.
+\end{critico}
+
+\begin{cuando}[— Cuándo SÍ escalar con árboles]
+  \begin{itemize}
+    \item Cuando el pipeline incluye también modelos que requieren escalado (SVM, redes neuronales).
+    \item Como paso previo a PCA o reducción de dimensionalidad antes del árbol.
+    \item En algoritmos híbridos donde el árbol es un componente dentro de un pipeline complejo.
+  \end{itemize}
+\end{cuando}
+
+\section{Guía de Ejercicios — Árboles}
+
+\begin{ejercicio}[1: Cálculo manual de Entropía y Gini]
+  Dado un nodo con 10 muestras: 6 de clase A y 4 de clase B.
+  \begin{enumerate}
+    \item Calcula la entropía $H(S)$.
+    \item Calcula el índice de Gini.
+    \item Tras dividir por un atributo: subconjunto izquierdo: 5A, 1B; derecho: 1A, 3B.
+          Calcula la ganancia de información y el Gini split.
+    \item ¿Cuál es el mejor criterio aquí? ¿Coinciden entropía y Gini en la decisión?
+  \end{enumerate}
+  \tcblower
+  \textbf{Solución parcial:} $p_A=0.6$, $p_B=0.4$.
+  $H(S) = -(0.6\log_2 0.6 + 0.4\log_2 0.4) = 0.971$.
+  $\text{Gini}(S) = 1-(0.36+0.16)=0.48$.
+\end{ejercicio}
+
+\begin{ejercicio}[2: Diagnóstico de sobreajuste]
+  Tienes un árbol con Train acc=0.98 y Test acc=0.74. Paso a paso:
+  \begin{enumerate}
+    \item ¿Qué tipo de error predomina: sesgo o varianza?
+    \item ¿Qué estrategia de regularización aplicarías primero?
+    \item Si tras \texttt{max\_depth=4} obtienes Train=0.84, Test=0.82, ¿está resuelto?
+    \item ¿Tiene sentido aplicar \texttt{StandardScaler} para mejorar el resultado?
+  \end{enumerate}
+\end{ejercicio}
+
+% ════════════════════════════════════════════════════════════
+\chapter{Métodos de Ensamble — Teoría}
+% ════════════════════════════════════════════════════════════
+
+\section{¿Qué son los Métodos de Ensamble?}
+
+Los métodos de ensamble combinan múltiples \textit{clasificadores débiles} (weak learners)
+para formar un predictor más robusto. Un clasificador débil solo acierta ligeramente mejor
+que el azar.
+
+\begin{formula}[— Predictor de Ensamble]
+  \[
+    \hat{f}_{\text{ens}}(x) = \sum_{m=1}^{M} \alpha_m \cdot \hat{f}_m(x)
+  \]
+  donde $\hat{f}_m(x)$ es el $m$-ésimo estimador entrenado en $D_m \subseteq D$.
+\end{formula}
+
+\section{El Trade-off Sesgo-Varianza}
+
+\begin{formula}[— Descomposición Sesgo-Varianza-Ruido]
+  \[
+    \mathbb{E}\bigl[(y_i - \hat{f}(x_i))^2\bigr]
+    = \underbrace{\bigl[f(x_i) - \mathbb{E}(\hat{f}(x_i))\bigr]^2}_{\text{Sesgo}^2}
+    + \underbrace{\mathbb{E}\bigl[(\hat{f}(x_i) - \mathbb{E}(\hat{f}(x_i)))^2\bigr]}_{\text{Varianza}}
+    + \underbrace{\mathbb{E}[\varepsilon^2]}_{\text{Ruido irreducible}}
+  \]
+\end{formula}
+
+\begin{resumen}[— Componentes del error]
+  \begin{tabular}{llll}
+    \toprule
+    \textbf{Componente} & \textbf{Definición} & \textbf{Causa} & \textbf{Solución}\\
+    \midrule
+    Sesgo & Error sistemático & Modelo demasiado simple & Boosting, modelo complejo\\
+    Varianza & Sensibilidad a los datos & Overfitting & Bagging, regularización\\
+    Ruido & Variabilidad inherente & Datos ruidosos & No reducible con el modelo\\
+    \bottomrule
+  \end{tabular}
+\end{resumen}
+
+\begin{tip}[— Analogía del arquero]
+  \begin{itemize}
+    \item \textbf{Alto sesgo, baja varianza:} flechas juntas pero lejos del centro.
+    \item \textbf{Bajo sesgo, alta varianza:} flechas dispersas alrededor del centro.
+    \item \textbf{Bajo sesgo, baja varianza:} todas cerca del centro. \textit{El ideal.}
+    \item \textbf{Alto sesgo, alta varianza:} el peor caso.
+  \end{itemize}
+\end{tip}
+
+\section{Taxonomía de Métodos de Ensamble}
+
+\begin{center}
+  \begin{tabular}{lll}
+    \toprule
+    \textbf{Característica} & \textbf{BAGGING} & \textbf{BOOSTING}\\
+    \midrule
+    Objetivo & Reducir \textbf{varianza} & Reducir \textbf{sesgo}\\
+    Entrenamiento & Paralelo (independiente) & Secuencial (corrige al anterior)\\
+    Datos & Bootstrap (con reemplazo) & Re-pesados o residuos\\
+    Combinación & Promedio o voto mayoritario & Suma ponderada\\
+    Riesgo & No reduce sesgo alto & Puede sobreajustarse\\
+    Paralelizable & Sí & No (secuencial por naturaleza)\\
+    Ejemplos & Bagging, Random Forest & AdaBoost, GB, XGBoost, LGBM, CatBoost\\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+\begin{cuando}[— Bagging vs Boosting]
+  \begin{itemize}
+    \item Usa \textbf{Bagging/RF} cuando el árbol base ya es bastante bueno pero inestable (alta varianza).
+    \item Usa \textbf{Boosting} cuando el árbol base es débil (underfitting) y necesitas reducir el sesgo.
+    \item En la práctica, \textbf{Boosting casi siempre supera a Bagging} en precisión, pero es más
+          propenso al sobreajuste y requiere más tuning.
+  \end{itemize}
+\end{cuando}
+
+% ════════════════════════════════════════════════════════════
+\chapter{Bagging y Random Forest}
+% ════════════════════════════════════════════════════════════
+
+\section{Bootstrap — Remuestreo con Reemplazo}
+
+El bootstrap crea $M$ conjuntos de datos distintos a partir del dataset original. Selecciona
+$n$ muestras \textbf{con reemplazo} de un dataset de $n$ observaciones. Resultado:
+aproximadamente \textbf{63.2\%} de observaciones únicas por muestra (el 36.8\% son duplicados).
+
+\begin{formula}[— ¿Por qué 63.2\%?]
+  La probabilidad de que una muestra específica \textbf{no} sea seleccionada en un único
+  sorteo es $(1 - 1/n)$. Tras $n$ sorteos:
+  \[
+    P(\text{no seleccionado}) = \left(1 - \frac{1}{n}\right)^n
+    \xrightarrow{n\to\infty} e^{-1} \approx 0.368
+  \]
+  Por tanto, el 63.2\% sí aparece en cada muestra bootstrap.
+\end{formula}
+
+\section{Bagging}
+
+\begin{formula}[— Predictor Bagging]
+  \[
+    \hat{f}_{\text{bag}}(x) = \frac{1}{M} \sum_{m=1}^{M} \hat{f}_m(x)
+  \]
+  \[
+    \text{var}\bigl(\hat{f}_{\text{bag}}(x)\bigr) = \frac{\sigma^2}{M} \to 0
+    \quad \text{cuando } M \to \infty
+  \]
+  \textit{La varianza se divide entre el número de estimadores.}
+\end{formula}
+
+\subsection{Out-of-Bag (OOB) — Validación Gratuita}
+
+El $\sim$36.8\% de datos no seleccionados en cada bootstrap sirve como conjunto de validación
+natural para ese árbol.
+
+\begin{critico}
+  El \textbf{error OOB} es un estimador casi tan bueno como la validación cruzada $k$-fold,
+  pero computacionalmente mucho más eficiente: no requiere re-entrenar el modelo.
+  Siempre activa \texttt{oob\_score=True} en BaggingRegressor y RandomForest.
+\end{critico}
+
+\begin{lstlisting}[caption={BaggingRegressor con OOB}]
+from sklearn.ensemble import BaggingRegressor
+from sklearn.tree import DecisionTreeRegressor
+
+bag_model = BaggingRegressor(
+    estimator=DecisionTreeRegressor(max_depth=3),
+    n_estimators=50,
+    oob_score=True,   # Validacion OOB gratuita
+    n_jobs=-1,        # Paralelizar
+    random_state=1
+)
+bag_model.fit(X_train, y_train)
+print(f'OOB Score (R2): {bag_model.oob_score_:.3f}')
+\end{lstlisting}
+
+\section{Random Forest}
+
+Random Forest resuelve el problema de correlación entre árboles en Bagging: si existe una
+característica muy dominante, todos los árboles la usarán en el nodo raíz y estarán
+correlacionados entre sí, limitando la reducción de varianza.
+
+\textbf{Solución:} en cada nodo se selecciona aleatoriamente un subconjunto de $m$ características
+del total de $p$, y solo se busca la mejor división dentro de ese subconjunto.
+
+\begin{formula}[— Algoritmo Random Forest]
+  \begin{align*}
+    \text{Regresión:} &\quad \hat{f}_{\text{rf}}(x) = \frac{1}{B}\sum_{b=1}^{B} \hat{f}_b(x)\\[6pt]
+    \text{Clasificación:} &\quad \hat{f}_{\text{rf}}(x) = \operatorname*{argmax}_{k \in \mathcal{Y}}
+      \sum_{b=1}^{B} \mathbf{1}[\hat{f}_b(x) = k]\\[6pt]
+    \text{Valores típicos:} &\quad m = \sqrt{p} \text{ (clasificación)}, \quad
+      m = p/3 \text{ (regresión)}
+  \end{align*}
+\end{formula}
+
+\begin{resumen}[— Hiperparámetros clave de Random Forest]
+  \begin{tabular}{llll}
+    \toprule
+    \textbf{Parámetro} & \textbf{Descripción} & \textbf{Efecto} & \textbf{Valor típico}\\
+    \midrule
+    \texttt{n\_estimators} & Número de árboles & Más $\to$ menos varianza & 100--500\\
+    \texttt{max\_features} & Features por nodo ($m$) & Menor $\to$ menos correlación & \texttt{sqrt} / \texttt{p/3}\\
+    \texttt{max\_depth} & Profundidad por árbol & Mayor $\to$ menos sesgo & \texttt{None}\\
+    \texttt{min\_samples\_leaf} & Muestras mínimas/hoja & Mayor $\to$ regularización & 1\\
+    \texttt{ccp\_alpha} & Post-poda por árbol & Mayor $\to$ árboles más simples & 0\\
+    \texttt{oob\_score} & Validación OOB & Ahorra conjunto de validación & \texttt{True}\\
+    \texttt{n\_jobs} & Paralelismo & -1 = todos los núcleos & -1\\
+    \bottomrule
+  \end{tabular}
+\end{resumen}
+
+\begin{alerta}[— Error común con n\_estimators]
+  Aumentar \texttt{n\_estimators} indefinidamente no mejora linealmente. Más de 200--500 árboles
+  rara vez mejora el desempeño pero sí aumenta el tiempo de predicción.
+  Usa la curva de aprendizaje para encontrar el punto de rendimientos decrecientes.
+\end{alerta}
+
+\begin{lstlisting}[caption={Random Forest con RandomizedSearchCV}]
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import RandomizedSearchCV
+from scipy.stats import loguniform
+
+dist = {
+    'n_estimators': range(1, 201),
+    'ccp_alpha':    loguniform(1e-4, 100),
+    'max_features': [4, 5, 6, 7],
+}
+rs = RandomizedSearchCV(
+    RandomForestRegressor(random_state=1),
+    param_distributions=dist,
+    scoring='neg_root_mean_squared_error',
+    n_iter=30, random_state=1
+)
+rs.fit(X_train, y_train)
+print(rs.best_params_)
+\end{lstlisting}
+
+\section{Guía de Ejercicios — Bagging y RF}
+
+\begin{ejercicio}[3: Bootstrap manual]
+  Dado el dataset $\{1.0, 2.4, 5.3, 3.7, 4.1\}$ (5 elementos):
+  \begin{enumerate}
+    \item Genera a mano 3 muestras bootstrap de tamaño 5 (usando una tabla de números aleatorios
+          o semilla fija).
+    \item ¿Cuántas muestras únicas hay en promedio? ¿Concuerda con el 63.2\%?
+    \item ¿Cuáles serían los elementos OOB de cada muestra?
+  \end{enumerate}
+\end{ejercicio}
+
+\begin{ejercicio}[4: Decorrelación en Random Forest]
+  Explica con tus propias palabras:
+  \begin{enumerate}
+    \item ¿Por qué Bagging puro NO reduce perfectamente la varianza aunque $M \to \infty$?
+    \item ¿Cómo resuelve Random Forest este problema?
+    \item Si tienes 10 características ($p=10$), ¿qué valor de $m$ usarías en clasificación?
+          ¿Y en regresión?
+    \item Si reduces $m$ de 10 a 2, ¿qué pasa con el sesgo? ¿Y con la varianza?
+  \end{enumerate}
+\end{ejercicio}
+
+% ════════════════════════════════════════════════════════════
+\chapter{AdaBoost}
+% ════════════════════════════════════════════════════════════
+
+\section{Concepto e Historia}
+
+AdaBoost (Adaptive Boosting) fue propuesto por Freund \& Schapire en 1996 y recibió el premio
+Gödel (equivalente al Nobel en Ciencias de la Computación Teórica). Demostró que podían
+combinarse clasificadores débiles para formar uno fuerte.
+
+\begin{resumen}[— Ficha técnica de AdaBoost]
+  \begin{tabular}{ll}
+    \toprule
+    \textbf{Origen} & Freund \& Schapire, 1996 (Premio Gödel)\\
+    \textbf{Idea central} & Re-pesar muestras mal clasificadas\\
+    \textbf{Clasificador base} & Stump (árbol de profundidad 1)\\
+    \textbf{Predicción final} & $\hat{y} = \text{sign}\!\left(\sum \alpha_t h_t(x)\right)$\\
+    \textbf{Función de pérdida} & Pérdida exponencial\\
+    \textbf{Limitaciones} & Sensible a ruido; no soporta NaN\\
+    \bottomrule
+  \end{tabular}
+\end{resumen}
+
+\section{Algoritmo AdaBoost Paso a Paso}
+
+\begin{formula}[— Algoritmo AdaBoost Clasificación Binaria]
+  \textbf{Inicialización:} $w_i^{(1)} = \frac{1}{N}$ para $i = 1, \ldots, N$
+
+  \medskip
+  \textbf{Para $t = 1, \ldots, T$:}
+  \begin{enumerate}
+    \item Entrenar $h_t(x)$ con pesos $\mathbf{w}^{(t)}$.
+    \item Calcular el error ponderado:
+    \[
+      \varepsilon_t = \frac{\sum_i w_i \cdot \mathbf{1}[y_i \neq h_t(x_i)]}{\sum_i w_i}
+    \]
+    \item Calcular el peso del estimador:
+    \[
+      \alpha_t = \frac{1}{2} \ln\!\left(\frac{1 - \varepsilon_t}{\varepsilon_t}\right)
+    \]
+    \item Actualizar pesos de muestras:
+    \[
+      w_i^{(t+1)} = w_i^{(t)} \cdot \exp\!\left(-\alpha_t \cdot y_i \cdot h_t(x_i)\right)
+    \]
+    Mal clasificada: $w$ \textbf{aumenta}. Bien clasificada: $w$ disminuye.
+    \item Normalizar: $w_i^{(t+1)} \leftarrow w_i^{(t+1)} / \sum_j w_j^{(t+1)}$
+  \end{enumerate}
+
+  \medskip
+  \textbf{Predicción final:} $\hat{y}(x) = \text{sign}\!\left(\sum_{t=1}^{T} \alpha_t h_t(x)\right)$
+\end{formula}
+
+\begin{tip}[— Intuición de AdaBoost]
+  \begin{itemize}
+    \item El primer clasificador intenta resolver el problema completo con pesos iguales.
+    \item Las muestras fallidas se marcan como ``difíciles'' y reciben más atención.
+    \item Cada siguiente clasificador se especializa en esas muestras difíciles.
+    \item El consenso ponderado final es más robusto que cualquiera individualmente.
+  \end{itemize}
+\end{tip}
+
+\begin{critico}
+  \textbf{AdaBoost no tolera NaN ni variables categóricas directamente.}
+  Siempre aplica \texttt{dropna()} y codifica categóricas antes de usarlo.
+\end{critico}
+
+\section{Implementación}
+
+\begin{lstlisting}[caption={AdaBoost con Pipeline completo}]
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.pipeline import Pipeline
+from sklearn.model_selection import RandomizedSearchCV
+from scipy.stats import loguniform
+
+ada = AdaBoostClassifier(n_estimators=50, random_state=1)
+model = Pipeline([('preprocessor', preprocessor), ('classifier', ada)])
+model.fit(X_train, y_train)
+
+# Sintonizacion de hiperparametros
+dist = {
+    'classifier__learning_rate': loguniform(1e-3, 10),
+    'classifier__n_estimators':  range(1, 200)
+}
+rs = RandomizedSearchCV(
+    model, dist, scoring='f1_weighted',
+    n_iter=20, random_state=1
+)
+rs.fit(X_train, y_train)
+# Best: learning_rate=1.63, n_estimators=62
+\end{lstlisting}
+
+\section{Guía de Ejercicios — AdaBoost}
+
+\begin{ejercicio}[5: Seguimiento manual de AdaBoost]
+  Tienes 6 muestras con etiquetas $y = [+1, +1, +1, -1, -1, -1]$.
+  El clasificador $h_1$ predice $[+1, +1, -1, -1, -1, +1]$.
+  \begin{enumerate}
+    \item ¿Cuáles muestras clasifica mal $h_1$?
+    \item Calcula $\varepsilon_1$ con pesos iniciales iguales.
+    \item Calcula $\alpha_1$.
+    \item Actualiza los pesos de las muestras mal clasificadas vs bien clasificadas.
+    \item Normaliza los pesos para que sumen 1.
+  \end{enumerate}
+\end{ejercicio}
+
+% ════════════════════════════════════════════════════════════
+\chapter{Gradient Boosting}
+% ════════════════════════════════════════════════════════════
+
+\section{La Idea Central}
+
+Gradient Boosting reformula el boosting como un \textbf{problema de optimización}: en lugar de
+re-pesar muestras, entrena cada nuevo árbol para predecir el \textbf{gradiente negativo} de la
+función de pérdida respecto a las predicciones actuales — es decir, los \textbf{residuos}.
+
+\begin{formula}[— Gradient Boosting: actualización]
+  \[
+    F_m(x) = F_{m-1}(x) + \eta \cdot h_m(x)
+  \]
+  \[
+    F_M(x) = F_0(x) + \eta \cdot h_1(x) + \eta \cdot h_2(x) + \cdots + \eta \cdot h_M(x)
+  \]
+  donde $\eta$ es el \textit{learning rate} y $h_m$ es el $m$-ésimo árbol que predice los residuos.
+\end{formula}
+
+\section{Algoritmo — Clasificación Binaria}
+
+\begin{formula}[— Gradient Boosting: clasificación]
+  \begin{enumerate}
+    \item \textbf{Inicialización:} $F_0(x) = \log\!\left(\frac{P(y=1)}{P(y=0)}\right)$
+    \item \textbf{Para $m = 1, \ldots, M$:}
+    \begin{enumerate}
+      \item Residuos (gradiente negativo de la log-loss):
+            $r_{im} = y_i - \hat{p}_{m-1}(x_i)$ donde
+            $\hat{p}_{m-1} = \sigma(F_{m-1}(x_i)) = \frac{1}{1+e^{-F_{m-1}(x_i)}}$
+      \item Entrenar $h_m(x)$ (árbol de regresión) para predecir $\{r_{im}\}$
+      \item Actualizar: $F_m(x) = F_{m-1}(x) + \eta \cdot h_m(x)$
+    \end{enumerate}
+    \item \textbf{Predicción final:} $\hat{p}(x) = \sigma(F_M(x))$
+  \end{enumerate}
+  \medskip
+  \textbf{Para regresión (MSE):} $F_0(x) = \bar{y}$; $r_{im} = y_i - F_{m-1}(x_i)$;
+  $\hat{y}(x) = F_M(x)$.
+\end{formula}
+
+\begin{resumen}[— Hiperparámetros clave de Gradient Boosting]
+  \begin{tabular}{lllll}
+    \toprule
+    \textbf{Parámetro} & \textbf{Descripción} & \textbf{Impacto} & \textbf{Rango típico}\\
+    \midrule
+    \texttt{n\_estimators} & Número de árboles & + $\to$ - sesgo, riesgo overfitting & 50--500\\
+    \texttt{learning\_rate} & Escala por árbol & - $\to$ necesita más árboles & 0.01--0.3\\
+    \texttt{max\_depth} & Profundidad por árbol & + $\to$ + varianza & 3--6\\
+    \texttt{subsample} & Fracción datos/árbol & - $\to$ más regularización & 0.5--1.0\\
+    \texttt{n\_iter\_no\_change} & Early stopping & Previene overfitting & 5--15\\
+    \bottomrule
+  \end{tabular}
+\end{resumen}
+
+\begin{tip}[— Regla práctica learning rate vs n\_estimators]
+  Empieza con \texttt{lr=0.1} y \texttt{n\_estimators=100}. Si quieres afinar:
+  reduce \texttt{lr} a 0.05 o 0.01 y multiplica \texttt{n\_estimators} proporcionalmente.
+  Valida con early stopping.
+\end{tip}
+
+\section{Guía de Ejercicios — Gradient Boosting}
+
+\begin{ejercicio}[6: Trazado de curva de aprendizaje]
+  Con \texttt{GradientBoostingClassifier} y el dataset Adult:
+  \begin{enumerate}
+    \item Entrena con \texttt{learning\_rate=0.1} y \texttt{n\_estimators} en $\{10, 50, 100, 200, 500\}$.
+    \item Registra el F1 de train y test para cada valor.
+    \item ¿En qué punto empieza el overfitting?
+    \item Repite con \texttt{learning\_rate=0.01}. ¿Cambia el punto de overfitting?
+    \item ¿Qué concluyes sobre la relación entre \texttt{lr} y \texttt{n\_estimators}?
+  \end{enumerate}
+\end{ejercicio}
+
+% ════════════════════════════════════════════════════════════
+\chapter{Boosting Avanzado: XGBoost, LightGBM y CatBoost}
+% ════════════════════════════════════════════════════════════
+
+\section{XGBoost}
+
+\subsection{Mejoras sobre Gradient Boosting clásico}
+
+\begin{resumen}[— Innovaciones de XGBoost]
+  \begin{tabular}{lp{5.5cm}p{4.5cm}}
+    \toprule
+    \textbf{Mejora} & \textbf{Problema que resuelve} & \textbf{Cómo funciona}\\
+    \midrule
+    Regularización ($\gamma$, $\lambda$) & GB puede sobreajustarse & $\gamma$ penaliza hojas extra;
+      $\lambda$ es L2 sobre pesos\\
+    Newton Boosting & GB usa solo 1er orden (lento) & Usa el Hessiano (2ª derivada);
+      converge más rápido\\
+    Cuantiles ponderados & Evaluar todos los splits es $O(n{\times}p)$ & Agrupa en bins ponderados
+      por el Hessiano; $O(\text{bins}{\times}p)$\\
+    NaN nativo & Requería imputación previa & Aprende la dirección óptima para valores faltantes\\
+    Categorías nativas & One-Hot crea matrices dispersas & Ordena por estadísticas de gradiente\\
+    \bottomrule
+  \end{tabular}
+\end{resumen}
+
+\begin{lstlisting}[caption={XGBoost con early stopping y categorías nativas}]
+from xgboost import XGBClassifier
+from sklearn.model_selection import train_test_split
+
+# Convertir categoricas a tipo 'category'
+X[cat_cols] = X[cat_cols].astype('category')
+
+X_tr, X_val, y_tr, y_val = train_test_split(
+    X_train, y_train, test_size=0.1, stratify=y_train
+)
+
+model = XGBClassifier(
+    grow_policy='lossguide',    # Leaf-wise (como LightGBM)
+    tree_method='hist',         # Histogramas (rapido)
+    enable_categorical=True,    # Soporte nativo categoricas
+    early_stopping_rounds=10,
+    random_state=1
+)
+model.fit(X_tr, y_tr, eval_set=[(X_val, y_val)], verbose=False)
+\end{lstlisting}
+
+\section{LightGBM}
+
+\subsection{Las 4 Innovaciones}
+
+\begin{resumen}[— Innovaciones de LightGBM]
+  \begin{tabular}{lp{5.5cm}p{4.5cm}}
+    \toprule
+    \textbf{Innovación} & \textbf{Descripción} & \textbf{Beneficio}\\
+    \midrule
+    Histogramas & Discretiza features en bins ($\approx$255); busca splits en bordes &
+      40,000$\times$ más rápido con 10M filas\\
+    Leaf-wise growth & Solo expande la hoja con mayor ganancia & Mismo número de nodos,
+      menor error\\
+    GOSS & Usa muestras con gradiente alto; muestra aleatoria del resto &
+      Reduce datos por árbol sin perder precisión\\
+    EFB & Fusiona features que nunca son nonzero simultáneamente &
+      Reduce dimensionalidad en datos dispersos\\
+    \bottomrule
+  \end{tabular}
+\end{resumen}
+
+\begin{alerta}[— Leaf-wise y overfitting]
+  Leaf-wise puede crear árboles muy desequilibrados y sobreajustar.
+  Controla la complejidad con \texttt{num\_leaves} (no solo con \texttt{max\_depth}).
+  Regla: \texttt{num\_leaves} $< 2^{\texttt{max\_depth}}$.
+\end{alerta}
+
+\begin{lstlisting}[caption={LightGBM con early stopping}]
+import lightgbm as lgb
+from lightgbm import LGBMClassifier
+
+lgb_model = LGBMClassifier(objective='binary', verbose=0)
+lgb_model.fit(
+    X_tr, y_tr,
+    eval_set=[(X_val, y_val)],
+    eval_metric='logloss',
+    callbacks=[lgb.early_stopping(stopping_rounds=10)],
+)
+\end{lstlisting}
+
+\section{CatBoost}
+
+\subsection{Innovaciones}
+
+\begin{resumen}[— Innovaciones de CatBoost]
+  \begin{tabular}{lp{5cm}p{5cm}}
+    \toprule
+    \textbf{Innovación} & \textbf{Problema} & \textbf{Solución}\\
+    \midrule
+    Ordered Target Statistics & Target encoding clásico introduce fuga de información &
+      Calcula la media del target usando \textbf{solo} las muestras anteriores al orden aleatorio\\
+    Feature combinations & Interacciones entre categóricas & Crea combinaciones automáticas\\
+    Árboles simétricos & Predicción costosa con árboles asimétricos &
+      Misma condición en todos los nodos de un nivel; predicción $O(1)$\\
+    \bottomrule
+  \end{tabular}
+\end{resumen}
+
+\begin{critico}
+  \textbf{CatBoost soporta NaN en numéricas, pero NO en categóricas.}
+  Aplica \texttt{dropna(subset=categorical\_features)} antes de entrenar.
+\end{critico}
+
+\begin{lstlisting}[caption={CatBoost con soporte nativo de categóricas}]
+from catboost import CatBoostClassifier
+
+cat_model = CatBoostClassifier(verbose=0)
+cat_model.fit(
+    X_tr, y_tr,
+    cat_features=categorical_features,   # Indicar categoricas
+    eval_set=(X_val, y_val),
+    early_stopping_rounds=10
+)
+\end{lstlisting}
+
+\section{Comparativa de los 3 Algoritmos Avanzados}
+
+\begin{center}
+  \begin{tabular}{llll}
+    \toprule
+    \textbf{Criterio} & \textbf{XGBoost} & \textbf{LightGBM} & \textbf{CatBoost}\\
+    \midrule
+    Velocidad & Media & Muy alta & Media-alta\\
+    Datos $>$1M filas & Lento & Excelente & Medio\\
+    Categorías & Encoding manual & Básico nativo & Avanzado nativo (sin leakage)\\
+    Valores nulos & Sí (nativo) & Sí (nativo) & Solo numéricas\\
+    Regularización & $\gamma$, $\lambda$, $\alpha$ & \texttt{reg\_alpha/lambda} & \texttt{l2\_leaf\_reg}\\
+    Crecimiento & Level-wise (configurable) & Leaf-wise (default) & Simétrico\\
+    Mejor para & Datos mixtos, tuning fino & Datasets muy grandes & Muchas categóricas\\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+% ════════════════════════════════════════════════════════════
+\chapter{Conceptos Fundamentales — Los 15 Más Críticos}
+% ════════════════════════════════════════════════════════════
+
+\begin{enumerate}[leftmargin=*, label=\textbf{\arabic*.}]
+
+\item \textbf{Sobreajuste (Overfitting)}\\
+  Train acc=100\%, test acc=77\% = señal de alarma. El árbol memorizó el ruido.
+  \textit{Siempre regularizar.}
+
+\item \textbf{Entropía y Ganancia de Información}\\
+  La entropía mide cuánta impureza hay; la ganancia mide cuánto la reduce una división.
+  \textit{Corazón del árbol: sin esto, no sabe qué pregunta hacer primero.}
+
+\item \textbf{Impureza de Gini}\\
+  Probabilidad de clasificar mal una muestra aleatoria. Más eficiente que entropía.
+  \textit{En práctica, entropía y Gini dan resultados casi idénticos.}
+
+\item \textbf{Podado (Pruning)}\\
+  Pre-poda: más eficiente. Post-poda con \texttt{ccp\_alpha}: más sistemática.
+  \textit{Siempre preferir post-poda cuando el tiempo lo permite.}
+
+\item \textbf{Feature Importance}\\
+  Importancia relativa basada en reducción de impureza. Herramienta de selección.
+  \textit{No indica causalidad. Solo relevancia predictiva.}
+
+\item \textbf{Bootstrap}\\
+  $\approx$63.2\% de muestras únicas por muestra bootstrap. Permite crear $M$ datasets distintos.
+  \textit{Fundamento de todo Bagging y Random Forest.}
+
+\item \textbf{Out-of-Bag (OOB) Error}\\
+  El 36.8\% no seleccionado sirve como validación gratuita por árbol.
+  \textit{OOB $\approx$ CV $k$-fold, pero mucho más eficiente computacionalmente.}
+
+\item \textbf{Decorrelación (Random Forest)}\\
+  RF selecciona $m < p$ features por nodo, reduciendo correlación entre árboles.
+  \textit{Sin decorrelación, el promedio de árboles similares mejora poco la varianza.}
+
+\item \textbf{Sesgo-Varianza Trade-off}\\
+  Error = Sesgo$^2$ + Varianza + Ruido. Bagging $\to$ reduce varianza. Boosting $\to$ reduce sesgo.
+  \textit{Este tradeoff determina qué familia de algoritmo usar.}
+
+\item \textbf{Learning Rate ($\eta$)}\\
+  Escala la contribución de cada árbol. Menor $\eta$ $\Rightarrow$ más árboles, mejor generalización.
+  \textit{Regla: lr=0.1, 100 árboles como punto de partida.}
+
+\item \textbf{Early Stopping}\\
+  Detener cuando el error de validación deja de mejorar. Previene overfitting automáticamente.
+  \textit{Disponible en XGBoost, LightGBM y CatBoost. Siempre activarlo.}
+
+\item \textbf{Target Encoding}\\
+  Reemplaza cada categoría con la media del target. Útil para alta cardinalidad.
+  \textit{Siempre usar TargetEncoder de sklearn (cross-fitting interno) para evitar leakage.}
+
+\item \textbf{Residuos en Gradient Boosting}\\
+  Los residuos = gradiente negativo de la pérdida. Cada árbol corrige los errores actuales.
+  \textit{Clave: GB predice el ERROR, no $y$ directamente.}
+
+\item \textbf{Hessiano (Newton Boosting — XGBoost)}\\
+  La segunda derivada de la pérdida permite una aproximación cuadrática más precisa.
+  \textit{XGBoost converge con menos árboles que GB clásico.}
+
+\item \textbf{Stacking vs Averaging}\\
+  Averaging: promedio simple. Stacking: meta-modelo que aprende cómo combinar modelos base.
+  \textit{En competencias, stacking multi-nivel da típicamente el mejor resultado.}
+
+\end{enumerate}
+
+% ════════════════════════════════════════════════════════════
+\chapter{Cheatsheet y Fórmulas de Referencia}
+% ════════════════════════════════════════════════════════════
+
+\section{Tabla de Fórmulas Esenciales}
+
+\begin{longtable}{lll}
+  \toprule
+  \textbf{Concepto} & \textbf{Fórmula} & \textbf{Rango / Interpretación}\\
+  \midrule
+  \endhead
+  Entropía & $H(S) = -\sum_c p(c)\log_2 p(c)$ & $[0, \log_2 k]$; 0=puro\\
+  Ganancia info. & $GI(S,a) = H(S) - \sum_v \frac{|S_v|}{|S|}H(S_v)$ & $[0, H(S)]$; mayor=mejor split\\
+  Gini & $\text{Gini}(S) = 1-\sum_i p_i^2$ & $[0, 1-1/k]$; 0=puro\\
+  Gini split & $\frac{|L|}{|L|+|R|}\text{Gini}(L)+\frac{|R|}{|L|+|R|}\text{Gini}(R)$ & Minimizar\\
+  Bagging & $\hat{f}_\text{bag}(x) = \frac{1}{M}\sum \hat{f}_m(x)$ & Promedio $M$ modelos\\
+  Var. bagging & $\text{var}(\hat{f}_\text{bag}) = \sigma^2/M \to 0$ & Decrece con $M$\\
+  RF regresión & $\hat{f}_\text{rf}(x) = \frac{1}{B}\sum_b \hat{f}_b(x)$ & Promedio de $B$ árboles\\
+  RF clasificación & $\hat{f}_\text{rf}(x) = \operatorname{argmax}_k\sum_b \mathbf{1}[\hat{f}_b(x)=k]$ & Voto mayoritario\\
+  AdaBoost error & $\varepsilon_t = \sum_i w_i \mathbf{1}[y_i\neq h_t(x_i)] / \sum_i w_i$ & $[0, 0.5]$; $<0.5$ = útil\\
+  AdaBoost $\alpha$ & $\alpha_t = \frac{1}{2}\ln\!\left(\frac{1-\varepsilon_t}{\varepsilon_t}\right)$ & Mayor $\alpha_t$ = más influencia\\
+  AdaBoost pesos & $w_i^{(t+1)} = w_i^{(t)}\exp(-\alpha_t y_i h_t(x_i))$ & Aumenta pesos de errores\\
+  AdaBoost pred. & $\hat{y}(x) = \text{sign}(\sum_t \alpha_t h_t(x))$ & Votación ponderada\\
+  GB residuos & $r_{im} = -\partial L(y_i,F(x_i))/\partial F(x_i)$ & Gradiente negativo\\
+  GB (MSE) & $r_{im} = y_i - F_{m-1}(x_i)$ & Diferencia directa\\
+  GB actualiz. & $F_m(x) = F_{m-1}(x) + \eta h_m(x)$ & $\eta$=lr, $h_m$=árbol nuevo\\
+  Sesgo-Varianza & $E_\text{total} = \text{Sesgo}^2 + \text{Varianza} + \text{Ruido}$ & Tradeoff fundamental\\
+  Bootstrap & $P(\text{no sel.}) = (1-1/n)^n \approx e^{-1} \approx 0.368$ & 63.2\% únicos/muestra\\
+  \bottomrule
+  \caption{Fórmulas esenciales del módulo}
+\end{longtable}
+
+\section{Guía Rápida de Implementación}
+
+\begin{lstlisting}[caption={Cheatsheet de código — todos los modelos}]
+# === ARBOL DE DECISION ========================================
+from sklearn.tree import DecisionTreeClassifier
+clf = DecisionTreeClassifier(
+    criterion='gini',         # 'gini' (default) o 'entropy'
+    max_depth=5,              # Pre-poda
+    min_samples_leaf=5,       # Pre-poda
+    ccp_alpha=0.01,           # Post-poda
+    random_state=1
+)
+
+# === RANDOM FOREST ============================================
+from sklearn.ensemble import RandomForestClassifier
+rf = RandomForestClassifier(
+    n_estimators=200,
+    max_features='sqrt',      # m = sqrt(p)
+    oob_score=True,
+    n_jobs=-1, random_state=1
+)
+
+# === ADABOOST =================================================
+from sklearn.ensemble import AdaBoostClassifier
+ada = AdaBoostClassifier(
+    n_estimators=100,
+    learning_rate=1.0,
+    random_state=1
+)
+
+# === GRADIENT BOOSTING ========================================
+from sklearn.ensemble import GradientBoostingClassifier
+gb = GradientBoostingClassifier(
+    n_estimators=100, learning_rate=0.1, max_depth=3,
+    subsample=0.8, n_iter_no_change=10,
+    validation_fraction=0.1, random_state=1
+)
+
+# === XGBOOST ==================================================
+from xgboost import XGBClassifier
+xgb = XGBClassifier(
+    n_estimators=500, learning_rate=0.05, max_depth=6,
+    subsample=0.8, colsample_bytree=0.8,
+    gamma=1, reg_alpha=0.1, reg_lambda=1.0,
+    scale_pos_weight=3,       # Desbalance: neg/pos
+    tree_method='hist', enable_categorical=True,
+    early_stopping_rounds=10, random_state=1
+)
+
+# === LIGHTGBM =================================================
+import lightgbm as lgb
+lgbm = lgb.LGBMClassifier(
+    n_estimators=1000, learning_rate=0.05,
+    num_leaves=31,            # Control leaf-wise
+    min_child_samples=20,     # Regularizacion
+    subsample=0.8, colsample_bytree=0.8,
+    reg_alpha=0.1, reg_lambda=1.0, verbose=-1
+)
+lgbm.fit(X_tr, y_tr, eval_set=[(X_val, y_val)],
+         callbacks=[lgb.early_stopping(50)])
+
+# === CATBOOST =================================================
+from catboost import CatBoostClassifier
+cat = CatBoostClassifier(
+    iterations=1000, learning_rate=0.05,
+    depth=6, l2_leaf_reg=3, verbose=0
+)
+cat.fit(X_tr, y_tr, cat_features=['col1','col2'],
+        eval_set=(X_val, y_val), early_stopping_rounds=50)
+
+# === BUSQUEDA DE HIPERPARAMETROS ==============================
+from sklearn.model_selection import RandomizedSearchCV
+from scipy.stats import loguniform, uniform, randint
+dist = {'learning_rate': loguniform(0.01, 0.3),
+        'n_estimators':  randint(50, 500)}
+rs = RandomizedSearchCV(model, dist, n_iter=50,
+    scoring='f1_weighted', cv=5, n_jobs=-1, random_state=1)
+rs.fit(X_train, y_train)
+\end{lstlisting}
+
+% ════════════════════════════════════════════════════════════
+\chapter{Guía de Estudio Definitiva}
+% ════════════════════════════════════════════════════════════
+
+\section{Prerrequisitos}
+
+\begin{center}
+  \begin{tabular}{lll}
+    \toprule
+    \textbf{Prerrequisito} & \textbf{Nivel requerido} & \textbf{Por qué es necesario}\\
+    \midrule
+    Python (pandas, numpy, matplotlib) & Intermedio & Todos los notebooks lo usan\\
+    Estadística básica & Básico & Probabilidad, media, varianza, distribuciones\\
+    Álgebra lineal & Básico & Vectores y matrices para feature importances\\
+    Teoría de la información & Nociones & Entropía y ganancia de información\\
+    scikit-learn API & Básico-Intermedio & fit/predict/Pipeline/GridSearchCV\\
+    Conceptos de ML & Básico & Overfitting, cross-validation, métricas\\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+\section{Roadmap de Aprendizaje — 4 Semanas}
+
+\begin{tcolorbox}[colback=infobg, colframe=baggingblue, title={\faCalendar\ Semana 1 — Árboles de Decisión}]
+  \begin{itemize}[noitemsep]
+    \item Estudiar: capítulos 2 y 3 de esta guía (teoría CART, criterios de impureza)
+    \item Implementar: árbol con Adult dataset; árbol de regresión con Auto-MPG
+    \item Ejercicio: calcular manualmente entropía y Gini (ejercicios 1 y 2)
+    \item Meta: entender CART, criterios de impureza, regularización
+  \end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=infobg, colframe=baggingblue, title={\faCalendar\ Semana 2 — Bagging y Random Forest}]
+  \begin{itemize}[noitemsep]
+    \item Estudiar: capítulo 4 de esta guía (bootstrap, OOB, decorrelación)
+    \item Implementar: BaggingRegressor vs RandomForestRegressor
+    \item Ejercicio: bootstrap manual y análisis de decorrelación (ejercicios 3 y 4)
+    \item Meta: entender bootstrap, OOB, $m$-features, Random Forest
+  \end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=warningbg, colframe=boostingorange, title={\faCalendar\ Semana 3 — Boosting: AdaBoost y Gradient Boosting}]
+  \begin{itemize}[noitemsep]
+    \item Estudiar: capítulos 5 y 6 de esta guía
+    \item Implementar: AdaBoost y GradientBoosting con Pipeline completo
+    \item Ejercicio: seguimiento manual de AdaBoost (ejercicio 5); curva de aprendizaje (ejercicio 6)
+    \item Meta: entender residuos, learning rate, funciones de pérdida
+  \end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=critbg, colframe=accent, title={\faCalendar\ Semana 4 — XGBoost, LightGBM y CatBoost}]
+  \begin{itemize}[noitemsep]
+    \item Estudiar: capítulo 7 de esta guía + documentación oficial de cada librería
+    \item Implementar: comparativa completa de los 3 en el mismo dataset
+    \item Meta: saber cuándo usar cada uno, cómo configurar early stopping y tuning
+  \end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=successbg, colframe=treegreen, title={\faTrophy\ Consolidación — Proyecto Integrador}]
+  \begin{itemize}[noitemsep]
+    \item Aplicar pipeline completo: EDA $\to$ preprocesamiento $\to$ árbol $\to$ RF $\to$ boosting
+    \item Comparar modelos con tabla de resultados (F1 train/test, tiempo, overfitting)
+    \item Analizar importancias de features con todos los modelos
+    \item Implementar SHAP values para el mejor modelo
+  \end{itemize}
+\end{tcolorbox}
+
+\section{Errores Comunes y Cómo Evitarlos}
+
+\begin{center}
+  \begin{tabular}{lp{4.5cm}p{5.5cm}}
+    \toprule
+    \textbf{Concepto} & \textbf{Error común} & \textbf{Estrategia correcta}\\
+    \midrule
+    \texttt{ccp\_alpha} & Confundirlo con umbral de precisión &
+      Visualizar árbol con distintos $\alpha$; observar simplificación\\
+    Residuos en GB & Creer que es $y - \hat{y}$ siempre &
+      Para MSE sí; para log-loss es el gradiente negativo de la pérdida\\
+    lr vs n\_estimators & Tratarlos como independientes &
+      Son complementarios; lr bajo requiere más árboles. Usar early stopping\\
+    OOB error & Confundirlo con error en test &
+      OOB estima la generalización, no es exactamente igual a test\\
+    Feature importance & Inferir causalidad &
+      Solo indica relevancia predictiva. No causa-efecto\\
+    Leaf-wise (LGBM) & Ignorar riesgo de overfitting &
+      Controlar con \texttt{num\_leaves}, no solo \texttt{max\_depth}\\
+    Target encoding & Aplicar sin protección &
+      Siempre usar \texttt{TargetEncoder} de sklearn o CatBoost\\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+\section{Tabla Resumen Final}
+
+\begin{center}
+  \begin{tabular}{lll}
+    \toprule
+    \textbf{Necesidad} & \textbf{Algoritmo} & \textbf{Parámetro clave}\\
+    \midrule
+    Interpretabilidad total + reglas & Árbol podado (depth=3--5) & \texttt{ccp\_alpha} / \texttt{max\_depth}\\
+    Baseline rápido y robusto & Random Forest & \texttt{max\_features='sqrt'}\\
+    Precisión, datos medianos & Gradient Boosting / AdaBoost & \texttt{lr} + \texttt{n\_estimators}\\
+    Mejor precisión general & XGBoost & \texttt{gamma}, \texttt{reg\_alpha/lambda}\\
+    Datos muy grandes ($>$500k) & LightGBM & \texttt{num\_leaves}, \texttt{min\_child\_samples}\\
+    Muchas variables categóricas & CatBoost & \texttt{cat\_features}, \texttt{l2\_leaf\_reg}\\
+    Máxima precisión (competencia) & Stacking RF+XGB+LGBM+CAT & Meta-modelo logístico\\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+% ════════════════════════════════════════════════════════════
+\chapter{Conclusiones y Próximos Pasos}
+% ════════════════════════════════════════════════════════════
+
+\section{Aprendizajes Principales}
+
+\begin{enumerate}[label=\checkmark, leftmargin=*]
+  \item \textbf{Los árboles siempre sobreajustan sin regularización.}
+        Sin podado: train=100\%, test=77\%. La regularización es obligatoria.
+
+  \item \textbf{Bagging reduce varianza; Boosting reduce sesgo.}
+        Son filosofías complementarias. Si el árbol base es estable pero sesgado,
+        Boosting es más útil. Si es inestable, Bagging primero.
+
+  \item \textbf{Random Forest: robusto con poco tuning.}
+        Solo ajustando \texttt{n\_estimators} y \texttt{max\_depth} ya da buenos resultados.
+        Es el algoritmo ``seguro'' cuando no se sabe qué usar.
+
+  \item \textbf{XGBoost/LightGBM/CatBoost son el estado del arte para tabular.}
+        En prácticamente cualquier competencia con datos tabulares, uno de estos tres gana.
+        En producción, LightGBM es favorito por velocidad.
+
+  \item \textbf{El escalado NO ayuda a los árboles.}
+        Invariantes al escalado por definición. No desperdiciar tiempo en \texttt{StandardScaler}.
+
+  \item \textbf{Las categóricas requieren codificación (excepto CatBoost).}
+        AdaBoost y GB clásico no soportan categóricas. XGBoost y LightGBM sí con configuración.
+
+  \item \textbf{Los valores nulos no son problema (excepto AdaBoost).}
+        XGBoost, LightGBM y CatBoost (en numéricas) manejan NaN nativamente.
+\end{enumerate}
+
+\section{Próximos Pasos Recomendados}
+
+\begin{itemize}
+  \item Implementar \textbf{SHAP values} para interpretabilidad post-hoc de ensambles
+        (más informativo que \texttt{feature\_importances\_}).
+  \item Explorar \textbf{Optuna} para búsqueda bayesiana de hiperparámetros
+        (más eficiente que \texttt{RandomizedSearchCV}).
+  \item Implementar \textbf{stacking}: árbol + RF + XGBoost + LGBM como base;
+        meta-modelo logístico.
+  \item Explorar \textbf{calibración de probabilidades} (Platt scaling, isotonic regression)
+        para modelos de boosting.
+  \item Aplicar \textbf{curvas de aprendizaje} para diagnosticar sesgo vs varianza antes de
+        elegir el algoritmo.
+  \item Investigar \textbf{pérdidas personalizadas} (focal loss para clases muy desbalanceadas).
+\end{itemize}
+
+\vfill
+\begin{center}
+  \textit{Guía Maestra generada el 21 de mayo de 2026}\\
+  \textit{Emanuel Cabrera Novoa · Análisis Predictivo de Datos · Docente: Jhon Quiza}
+\end{center}
+
+\end{document}
